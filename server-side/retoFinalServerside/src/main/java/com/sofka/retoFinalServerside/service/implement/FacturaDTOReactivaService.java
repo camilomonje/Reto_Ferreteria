@@ -1,8 +1,10 @@
 package com.sofka.retoFinalServerside.service.implement;
 
 import com.sofka.retoFinalServerside.domain.FacturaDTOReactiva;
+import com.sofka.retoFinalServerside.domain.InventarioDTOReactiva;
 import com.sofka.retoFinalServerside.repository.IFacturaDTOReactivaRepository;
 import com.sofka.retoFinalServerside.service.IFacturaDTOReactivaService;
+import com.sofka.retoFinalServerside.service.IInventarioDTOReactivaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,15 +25,15 @@ public class FacturaDTOReactivaService implements IFacturaDTOReactivaService {
     }
 
     @Override
-    public Mono<FacturaDTOReactiva> delete(String idFactura) {
-        return repository.findByIdFactura(idFactura)
+    public Mono<FacturaDTOReactiva> delete(String id) {
+        return repository.findById(id)
                 .flatMap(factura -> repository
                         .deleteById(factura.getId()).thenReturn(factura));
     }
 
     @Override
-    public Mono<FacturaDTOReactiva> findByIdFactura(String idFactura) {
-        return repository.findByIdFactura(idFactura);
+    public Mono<FacturaDTOReactiva> findById(String id) {
+        return null;
     }
 
     @Override

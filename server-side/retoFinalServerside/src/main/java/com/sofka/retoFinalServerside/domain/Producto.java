@@ -2,27 +2,16 @@ package com.sofka.retoFinalServerside.domain;
 
 public class Producto {
 
-    private String idProducto;
-
     private String nombreProducto;
-
-    private int cantidad;
 
     private double precio;
 
-    public Producto(String idProducto, String nombreProducto, int cantidad, double precio) {
-        this.idProducto = idProducto;
+    private int cantidad;
+
+    public Producto(String nombreProducto, double precio, int cantidad) {
         this.nombreProducto = nombreProducto;
-        this.cantidad = cantidad;
         this.precio = precio;
-    }
-
-    public String getIdProducto() {
-        return idProducto;
-    }
-
-    public void setIdProducto(String idProducto) {
-        this.idProducto = idProducto;
+        this.cantidad = cantidad;
     }
 
     public String getNombreProducto() {
@@ -52,9 +41,7 @@ public class Producto {
     @Override
     public String toString() {
         return "Producto{" +
-                "idProducto='" + idProducto + '\'' +
                 ", nombreProducto='" + nombreProducto + '\'' +
-                ", cantidad=" + cantidad +
                 ", precio=" + precio +
                 '}';
     }

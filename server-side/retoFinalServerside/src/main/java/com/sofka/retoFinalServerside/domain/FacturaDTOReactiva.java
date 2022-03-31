@@ -4,16 +4,13 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.annotation.processing.Generated;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
 @Document(collection = "factura")
 public class FacturaDTOReactiva {
-
-    private String id2;
 
     @Id
     private String id = UUID.randomUUID().toString().substring(0,10);

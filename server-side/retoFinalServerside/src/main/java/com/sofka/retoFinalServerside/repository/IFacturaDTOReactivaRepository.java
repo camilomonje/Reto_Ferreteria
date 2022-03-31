@@ -6,5 +6,4 @@ import reactor.core.publisher.Mono;
 
 public interface IFacturaDTOReactivaRepository extends ReactiveMongoRepository<FacturaDTOReactiva, String> {
 
-    Mono<FacturaDTOReactiva> findByIdFactura(String idFactura);
 }

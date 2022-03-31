@@ -11,7 +11,11 @@ public class InventarioDTOReactiva {
     @Id
     private String id = UUID.randomUUID().toString().substring(0,10);
 
-    private Producto producto;
+    private String nombreProducto;
+
+    private double precioUnitario;
+
+    private int cantidad;
 
     private int minimaCantidad;
 
@@ -25,12 +29,28 @@ public class InventarioDTOReactiva {
         this.id = id;
     }
 
-    public Producto getProducto() {
-        return producto;
+    public String getNombreProducto() {
+        return nombreProducto;
     }
 
-    public void setProducto(Producto producto) {
-        this.producto = producto;
+    public void setNombreProducto(String nombreProducto) {
+        this.nombreProducto = nombreProducto;
+    }
+
+    public double getPrecioUnitario() {
+        return precioUnitario;
+    }
+
+    public void setPrecioUnitario(double precioUnitario) {
+        this.precioUnitario = precioUnitario;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
     }
 
     public int getMinimaCantidad() {

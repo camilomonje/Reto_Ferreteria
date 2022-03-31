@@ -7,7 +7,7 @@ import reactor.core.publisher.Mono;
 public interface IFacturaDTOReactivaService {
 
     Mono<FacturaDTOReactiva> save(FacturaDTOReactiva facturaDTOReactiva);
-    Mono<FacturaDTOReactiva> delete(String idFactura);
-    Mono<FacturaDTOReactiva> findByIdFactura(String idFactura);
+    Mono<FacturaDTOReactiva> delete(String id);
+    Mono<FacturaDTOReactiva> findById(String id);
     Flux<FacturaDTOReactiva> findAll();
 }
