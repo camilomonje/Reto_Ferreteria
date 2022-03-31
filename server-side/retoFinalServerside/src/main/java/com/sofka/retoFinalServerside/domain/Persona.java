@@ -4,11 +4,11 @@ public class Persona {
 
     private String nombre;
 
-    private int celular;
+    private Long celular;
 
-    private Long idCliente;
+    private String idCliente;
 
-    public Persona(Long idCliente, String nombre, int celular) {
+    public Persona(String idCliente, String nombre, Long celular) {
         this.nombre = nombre;
         this.celular = celular;
         this.idCliente = idCliente;
@@ -22,19 +22,28 @@ public class Persona {
         this.nombre = nombre;
     }
 
-    public int getCelular() {
+    public Long getCelular() {
         return celular;
     }
 
-    public void setCelular(int celular) {
+    public void setCelular(Long celular) {
         this.celular = celular;
     }
 
-    public Long getIdCliente() {
+    public String getIdCliente() {
         return idCliente;
     }
 
-    public void setIdCliente(Long idCliente) {
+    public void setIdCliente(String idCliente) {
         this.idCliente = idCliente;
+    }
+
+    @Override
+    public String toString() {
+        return "Persona{" +
+                "nombre='" + nombre + '\'' +
+                ", celular=" + celular +
+                ", idCliente='" + idCliente + '\'' +
+                '}';
     }
 }

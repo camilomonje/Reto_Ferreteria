@@ -5,12 +5,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 @Document(collection = "volante")
 public class VolanteDTOReactivo {
 
     @Id
-    private String id;
+    private String id = UUID.randomUUID().toString().substring(0,10);
 
     private Persona proveedor;
 

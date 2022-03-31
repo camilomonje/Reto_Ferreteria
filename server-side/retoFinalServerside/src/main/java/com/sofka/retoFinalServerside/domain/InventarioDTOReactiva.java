@@ -3,11 +3,13 @@ package com.sofka.retoFinalServerside.domain;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.UUID;
+
 @Document(collection = "inventario")
 public class InventarioDTOReactiva {
 
     @Id
-    private String id;
+    private String id = UUID.randomUUID().toString().substring(0,10);
 
     private Producto producto;
 
