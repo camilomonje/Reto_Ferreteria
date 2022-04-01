@@ -1,93 +1,65 @@
-import React from 'react';
-import { useTable } from 'react-table/dist/react-table.development';
+import React, { useCallback, useState } from "react";
+import Table from "../components/Table";
+import fetchUsers from "../redux/api/api";
 
 const Inventario = () => {
-    const data = React.useMemo(
-        () => [
-          {
-            col1: 'Hello',
-            col2: 'World',
-          },
-          {
-            col1: 'react-table',
-            col2: 'rocks',
-          },
-          {
-            col1: 'whatever',
-            col2: 'you want',
-          },
-        ],
-        []
-      )
-    
-      const columns = React.useMemo(
-        () => [
-          {
-            Header: 'Column 1',
-            accessor: 'col1', // accessor is the "key" in the data
-          },
-          {
-            Header: 'Column 2',
-            accessor: 'col2',
-          },
-        ],
-        []
-      )
-    
-      const {
-        getTableProps,
-        getTableBodyProps,
-        headerGroups,
-        rows,
-        prepareRow,
-      } = useTable({ columns, data })
-    
-      return (
-        <table {...getTableProps()} style={{ border: 'solid 1px blue' }}>
-          <thead>
-            {headerGroups.map(headerGroup => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map(column => (
-                  <th
-                    {...column.getHeaderProps()}
-                    style={{
-                      borderBottom: 'solid 3px red',
-                    //   background: 'aliceblue',
-                      color: 'black',
-                      fontWeight: 'bold',
-                    }}
-                  >
-                    {column.render('Header')}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {rows.map(row => {
-              prepareRow(row)
-              return (
-                <tr {...row.getRowProps()}>
-                  {row.cells.map(cell => {
-                    return (
-                      <td
-                        {...cell.getCellProps()}
-                        style={{
-                          padding: '10px',
-                          border: 'solid 1px gray',
-                        //   background: 'papayawhip',
-                        }}
-                      >
-                        {cell.render('Cell')}
-                      </td>
-                    )
-                  })}
-                </tr>
-              )
-            })}
-          </tbody>
-        </table>
-      )
+  const [isLoading, setLoading] = useState(false);
+  const [products, setProducts] = useState([]);
+  //const [pageCount, setPageCount] = useState(0);
+
+  const fetchData = useCallback(async function () {
+      setLoading(true)
+      const json = await fetchUsers()
+      setProducts(json)
+      //setPageCount(json.total_pages)
+      setLoading(false)
+  },[]);
+
+  const columns = React.useMemo(
+    () => [
+      {
+        Header: "ID",
+        accessor: "id", // accessor is the "key" in the data
+      },
+      {
+        Header: "Nombre",
+        accessor: "nombreProducto",
+      },
+      {
+        Header: "Precio",
+        accessor: "precioUnitario",
+      },
+      {
+        Header: "Cantidad",
+        accessor: "cantidad",
+      },
+      {
+        Header: "Min",
+        accessor: "minimaCantidad",
+      },
+      {
+        Header: "Max",
+        accessor: "maximaCantidad",
+      },   
+    ],
+    []
+  );
+
+
+  return (
+    <div className="App">
+      <h1>        
+        Inventario!
+      </h1>
+      <Table
+        columns={columns}
+        data={products}
+        fetchData={fetchData}
+        //pageCount={pageCount}
+      />
+      {isLoading && <div>Cargando...</div>}
+    </div>
+  );
 };
 
 export default Inventario;
