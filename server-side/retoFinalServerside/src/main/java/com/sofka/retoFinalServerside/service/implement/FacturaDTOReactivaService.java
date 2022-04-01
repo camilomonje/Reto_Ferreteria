@@ -12,6 +12,10 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
 @Service
 public class FacturaDTOReactivaService implements IFacturaDTOReactivaService {
 
@@ -21,6 +25,8 @@ public class FacturaDTOReactivaService implements IFacturaDTOReactivaService {
 
     @Override
     public Mono<FacturaDTOReactiva> save(FacturaDTOReactiva facturaDTOReactiva) {
+        facturaDTOReactiva.setFecha(LocalDate.now());
+        facturaDTOReactiva.setHora(LocalTime.parse((LocalTime.now()).format(DateTimeFormatter.ofPattern("HH:mm:ss"))));
         return repository.save(facturaDTOReactiva);
     }
 

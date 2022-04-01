@@ -4,7 +4,9 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -15,7 +17,9 @@ public class FacturaDTOReactiva {
     @Id
     private String id = UUID.randomUUID().toString().substring(0,10);
 
-    private LocalDateTime fecha;
+    private LocalDate fecha;
+
+    private LocalTime hora;
 
     private Persona cliente;
 
@@ -36,13 +40,20 @@ public class FacturaDTOReactiva {
         this.id = id;
     }
 
-
-    public LocalDateTime getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDateTime fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
+    }
+
+    public LocalTime getHora() {
+        return hora;
+    }
+
+    public void setHora(LocalTime hora) {
+        this.hora = hora;
     }
 
     public Persona getCliente() {

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Table from "../components/Table.jsx";
 import api from '../redux/api/api.js'
@@ -12,6 +12,36 @@ const Proovedores = () => {
 
   const selector = useSelector(state => state)
   const data = selector.inventory
+
+  const renderRowSubComponent = useCallback(
+    
+    ({ row, data }) => (
+      <pre
+        style={{
+          fontSize: '10px',
+        }}
+      >
+        <h1>Productos:</h1>
+        {data.map(p => {
+          if (p.id === row.values.id){
+            console.log(p)
+            return <h2>{p.productoList.map(l => {
+              
+              return <ul>
+                <li>{l.nombreProducto}</li>
+                <ul>
+                  <li>Cantidad: {l.cantidad} unidades</li>
+                  <li>Precio Unitario: ${l.precio}</li>
+                </ul>
+              </ul>;
+            })}</h2>
+          }
+          return "";
+        } )}
+      </pre>
+    ),
+    []
+  )
 
 
   const columns = React.useMemo(
@@ -61,7 +91,7 @@ const Proovedores = () => {
   return (
     <div>
       <h1>Proovedores</h1>
-      <Table columns={columns} data={data} />
+      <Table columns={columns} data={data} renderRowSubComponent={renderRowSubComponent} />
     </div>
   );
 };

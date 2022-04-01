@@ -1,4 +1,4 @@
-import { Fragment, useCallback } from "react";
+import { Fragment } from "react";
 import {
   usePagination,
   useTable,
@@ -12,6 +12,7 @@ import GlobalFilter from "./GlobalFilter";
 export default function Table({
   columns,
   data,
+  renderRowSubComponent
 }) {
   const tableInstance = useTable(
     {
@@ -48,36 +49,6 @@ export default function Table({
 
  // console.log(tableInstance)
   
-  const renderRowSubComponent = useCallback(
-    
-    ({ row, data }) => (
-      <pre
-        style={{
-          fontSize: '10px',
-        }}
-      >
-        <h1>Productos:</h1>
-        {data.map(p => {
-          if (p.id === row.values.id){
-            console.log(p)
-            return <h2>{p.productoList.map(l => {
-              
-              return <ul>
-                <li>{l.nombreProducto}</li>
-                <ul>
-                  <li>Cantidad: {l.cantidad} unidades</li>
-                  <li>Precio Unitario: ${l.precio}</li>
-                </ul>
-              </ul>;
-            })}</h2>
-          }
-          return "";
-        } )}
-      </pre>
-    ),
-    []
-  )
-
   return (
     <div>
       <TableContainer>
