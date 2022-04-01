@@ -1,20 +1,22 @@
 import React from "react";
-
+import '../assets/styles/containers/login.scss'
+import Logo from '../assets/img/logo.png'
 
 function Login(){
     return (
       <>
-        <div>
-          <img src="" alt="" />
+        <div className="div-logo">
+          <img src={Logo} alt="" />
         </div>
-        <form action="">
-            <label htmlFor="">
-                Ingresa E-mail
-                <input type="text" />
+        <form action=""className="form-login">
+            <label htmlFor="" className="from-login-label">
+                E-mail
+                <input type="text" placeholder="INGRESE E-MAIL"/>
             </label>
             <label htmlFor="">
-                Ingresa Contraseña
-                <input type="password" />
+                Contraseña
+                <input type="password" placeholder="INGRESE E-MAIL"/>
+                
             </label>
             <input type="submit" value="Ingresar" />
         </form>

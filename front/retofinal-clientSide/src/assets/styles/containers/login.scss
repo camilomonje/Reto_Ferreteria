@@ -1,0 +1,52 @@
+.div-logo{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.logo{
+    width: 20%;
+    
+}
+.title{
+    font-size: 2rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.form-login{
+    display: grid;
+    width: 100%;
+    height: 100%;
+    justify-items: center;
+    justify-content: center;
+}
+
+label{
+    width: 100%;
+    margin-bottom: 10%;
+}
+
+input{
+    width: 100%;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    height: 30px;
+    text-align: center;
+}
+
+
+.div-home{
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    margin-top: 2%;
+}
+
+.title-saludo{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    font-size: 1.5rem;
+}
