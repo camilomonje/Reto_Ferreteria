@@ -1,11 +1,46 @@
+import { getInventory, getInventoryFailed, getInventorySuccess } from "../actions/action";
 
 const functions = {
 
-    fetchInventory : async () => {
-        const response = await fetch(`http://localhost:8080/inventario`);
-        const json = await response.json();
-         return json;
-    }
+   fetchInventory : () => {
+        return async (dispatch) => {
+            dispatch(getInventory());
+            fetch(`http://localhost:8080/inventario`, {
+                method: 'GET', // *GET, POST, PUT, DELETE, etc.
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                })
+                .then(response => {
+                    return response.json()})
+                .then(json => {
+                  dispatch(getInventorySuccess(json));
+                })
+                .catch(error =>{
+                    dispatch(getInventoryFailed('No encontrado'));
+                });
+            }
+   },
+
+   fetchVolantes : () => {
+    return async (dispatch) => {
+        dispatch(getInventory());
+        fetch(`http://localhost:8080/volante`, {
+            method: 'GET', // *GET, POST, PUT, DELETE, etc.
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            })
+            .then(response => {
+                return response.json()})
+            .then(json => {
+              dispatch(getInventorySuccess(json));
+            })
+            .catch(error =>{
+                dispatch(getInventoryFailed('No encontrado'));
+            });
+        }
+}
 }
 
 export default functions;

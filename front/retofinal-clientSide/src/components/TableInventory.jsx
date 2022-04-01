@@ -1,29 +1,27 @@
-import { Fragment, useCallback } from "react";
 import {
   usePagination,
   useTable,
   useSortBy,
   useGlobalFilter,
-  useExpanded,
 } from "react-table/dist/react-table.development";
 import TableContainer from "../containers/TableContainer";
 import GlobalFilter from "./GlobalFilter";
 
 export default function Table({
   columns,
-  data,
+  data
 }) {
-  console.log(data)
+
+
   const tableInstance = useTable(
     {
       columns,
       data,
-      initialState: { pageSize: 10},
+      initialState: { pageSize: 5},
     },
     useGlobalFilter,
     useSortBy,
-    useExpanded,
-    usePagination,
+    usePagination
   );
 
   const {
@@ -44,28 +42,9 @@ export default function Table({
     pageCount,
     gotoPage,
     setPageSize,
-    rows,
-
   } = tableInstance;
 
- // console.log(tableInstance)
   
-  const renderRowSubComponent = useCallback(
-    ({ row }) => (
-      
-      <pre
-        style={{
-          fontSize: '10px',
-        }}
-      >
-        <h1>Productos:</h1>
-        {/* {data.filter(p => row.values.id === p.get)} */}
-        {console.log(data)}
-        <code>{JSON.stringify({ values: data }, null, 2)}</code>
-      </pre>
-    ),
-    []
-  )
 
   return (
     <div>
@@ -108,7 +87,6 @@ export default function Table({
             {page.map((row, i) => {
               prepareRow(row);
               return (
-                <Fragment>
                 <tr {...row.getRowProps()}>
                   {row.cells.map((cell) => {
                     return (
@@ -116,21 +94,6 @@ export default function Table({
                     );
                   })}
                 </tr>
-                {row.isExpanded ? (
-                  <tr>
-                    <td colSpan={visibleColumns.length}>
-                      {/*
-                          Inside it, call our renderRowSubComponent function. In reality,
-                          you could pass whatever you want as props to
-                          a component like this, including the entire
-                          table instance. But for this example, we'll just
-                          pass the row
-                        */}
-                      {renderRowSubComponent({ row })}
-                    </td>
-                  </tr>
-                ) : null}
-                </Fragment>
               );
             })}
           </tbody>

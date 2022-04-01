@@ -12,25 +12,3 @@ export const getInventoryFailed = (error) => ({
     payload: error
 })
 
-const fetchInventory = () => {
-    return async (dispatch) => {
-        dispatch(getInventory());
-        fetch(`http://localhost:8080/inventario`, {
-            method: 'GET', // *GET, POST, PUT, DELETE, etc.
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            })
-            .then(response => {
-                return response.json()})
-            .then(json => {
-              dispatch(getInventorySuccess(json));
-            })
-            .catch(error =>{
-                dispatch(getInventoryFailed('No encontrado'));
-            });
-    }
-    
-}
-
-export default fetchInventory

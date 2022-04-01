@@ -11,6 +11,8 @@ const reducer = (state = initialState, action) => {
       case "GET_INVENTORY_SUCCESS":
           return {...state, inventory : action.payload, loading: false}
       
+          case "GET_INVENTORY_FAILED":
+          return {...state, inventory : action.payload, loading: false}
 
 
     default:

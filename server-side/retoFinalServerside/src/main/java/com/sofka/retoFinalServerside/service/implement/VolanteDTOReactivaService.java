@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -21,6 +24,8 @@ public class VolanteDTOReactivaService implements IVolanteDTOReactivaService {
 
     @Override
     public Mono<VolanteDTOReactivo> save(VolanteDTOReactivo volanteDTOReactivo) {
+        volanteDTOReactivo.setFecha(LocalDate.now());
+        volanteDTOReactivo.setHora(LocalTime.parse((LocalTime.now()).format(DateTimeFormatter.ofPattern("HH:mm:ss"))));
         return repository.save(volanteDTOReactivo);
     }
 

@@ -1,35 +1,18 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Table from "../components/Table";
-import fetchInventory from "../redux/actions/action";
-import api from "../redux/api/api"
+import TableInventory from "../components/Table";
+import api from '../redux/api/api.js'
 
 
 const Inventario = () => {
-  const [isLoading, setLoading] = useState(false);
-  //const [products, setProducts] = useState([]);
-
-
   const dispatch = useDispatch()
-   
 
   useEffect(() => {
-    dispatch(fetchInventory())
+    dispatch(api.fetchInventory())
   }, [dispatch]);
 
-  
-
-  //setProducts(selector.inventory)
-
-  //console.log(products)
-
-
-  // const fetchData = useCallback(async function () {
-  //     setLoading(true)
-  //     const json = await api.fetchInventory()
-  //     setProducts(json)
-  //     setLoading(false)
-  // },[]);
+  const selector = useSelector(state => state)
+  const data = selector.inventory
 
   const columns = React.useMemo(
     () => [
@@ -67,12 +50,10 @@ const Inventario = () => {
       <h1>        
         Inventario!
       </h1>
-      <Table
+      <TableInventory
         columns={columns}
-        //data={selector.inventory}
-        //fetchData={fetchData}
+        data={data}
       />
-      {isLoading && <div>Cargando...</div>}
     </div>
   );
 };

@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,6 +19,8 @@ public class VolanteDTOReactivo {
     private List<Producto> productoList;
 
     private LocalDate fecha;
+
+    private LocalTime hora;
 
     public String getId() {
         return id;
@@ -49,5 +52,13 @@ public class VolanteDTOReactivo {
 
     public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
+    }
+
+    public LocalTime getHora() {
+        return hora;
+    }
+
+    public void setHora(LocalTime hora) {
+        this.hora = hora;
     }
 }
