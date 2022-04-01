@@ -2,9 +2,13 @@ import { useEffect } from "react";
 import {
   usePagination,
   useTable,
-  useSortBy
+  useSortBy,
+  //useFilters, 
+   useGlobalFilter, 
+//   useAsyncDebounce
 } from "react-table/dist/react-table.development";
 import TableContainer from "../containers/TableContainer";
+import GlobalFilter from "./GlobalFilter";
 
 export default function Table({
   data,
@@ -20,6 +24,7 @@ export default function Table({
       manualPagination: true,
       pageCount: controlledPageCount,
     },
+    useGlobalFilter,
     useSortBy,
     usePagination,
   );
@@ -34,9 +39,12 @@ export default function Table({
     prepareRow,
     nextPage,
     previousPage,
+    state,
+    visibleColumns,
+    preGlobalFilteredRows,
+    setGlobalFilter,
     state: { pageIndex },
   } = tableInstance;
-
   useEffect(() => {
     fetchData();
   }, [pageIndex, fetchData]);
@@ -62,6 +70,20 @@ export default function Table({
                 ))}
               </tr>
             ))}
+            <tr>
+            <th
+              colSpan={visibleColumns.length}
+              style={{
+                textAlign: 'left',
+              }}
+            >
+              <GlobalFilter
+                preGlobalFilteredRows={preGlobalFilteredRows}
+                globalFilter={state.globalFilter}
+                setGlobalFilter={setGlobalFilter}
+              />
+            </th>
+          </tr>
           </thead>
           <tbody {...getTableBodyProps()}>
             {rows.map((row) => {

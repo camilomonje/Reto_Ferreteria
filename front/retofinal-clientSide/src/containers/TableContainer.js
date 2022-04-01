@@ -35,5 +35,13 @@ export default styled.div`
       }
       font-weight: bolder;
     }
+
+    input {
+        width: 100%;
+        margin-top: 0.1rem;
+        margin-bottom: 0.1rem;
+        height: 30px;
+        text-align: center; 
+    }
   }
 `;
