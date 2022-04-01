@@ -13,7 +13,6 @@ export default function Table({
   columns,
   data,
 }) {
-  console.log(data)
   const tableInstance = useTable(
     {
       columns,
@@ -44,24 +43,36 @@ export default function Table({
     pageCount,
     gotoPage,
     setPageSize,
-    rows,
 
   } = tableInstance;
 
  // console.log(tableInstance)
   
   const renderRowSubComponent = useCallback(
-    ({ row }) => (
-      
+    
+    ({ row, data }) => (
       <pre
         style={{
           fontSize: '10px',
         }}
       >
         <h1>Productos:</h1>
-        {/* {data.filter(p => row.values.id === p.get)} */}
-        {console.log(data)}
-        <code>{JSON.stringify({ values: data }, null, 2)}</code>
+        {data.map(p => {
+          if (p.id === row.values.id){
+            console.log(p)
+            return <h2>{p.productoList.map(l => {
+              
+              return <ul>
+                <li>{l.nombreProducto}</li>
+                <ul>
+                  <li>Cantidad: {l.cantidad} unidades</li>
+                  <li>Precio Unitario: ${l.precio}</li>
+                </ul>
+              </ul>;
+            })}</h2>
+          }
+          return "";
+        } )}
       </pre>
     ),
     []
@@ -126,7 +137,7 @@ export default function Table({
                           table instance. But for this example, we'll just
                           pass the row
                         */}
-                      {renderRowSubComponent({ row })}
+                      {renderRowSubComponent({ row, data })}
                     </td>
                   </tr>
                 ) : null}

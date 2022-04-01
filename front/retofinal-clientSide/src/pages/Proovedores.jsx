@@ -13,7 +13,6 @@ const Proovedores = () => {
   const selector = useSelector(state => state)
   const data = selector.inventory
 
-  console.log(data)
 
   const columns = React.useMemo(
     () => [
@@ -45,10 +44,6 @@ const Proovedores = () => {
       {
         Header: "Documento ID",
         accessor: "proveedor.idCliente",
-      },
-      {
-        Header: "Productos",
-        accessor: "productoList-",
       },
       {
         Header: "Fecha",
