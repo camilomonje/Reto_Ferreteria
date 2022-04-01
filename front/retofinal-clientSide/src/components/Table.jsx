@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import {
   usePagination,
   useTable,
+  useSortBy
 } from "react-table/dist/react-table.development";
 import TableContainer from "../containers/TableContainer";
 
@@ -19,7 +20,8 @@ export default function Table({
       manualPagination: true,
       pageCount: controlledPageCount,
     },
-    usePagination
+    useSortBy,
+    usePagination,
   );
 
   const {
@@ -47,8 +49,15 @@ export default function Table({
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps()}>
+                  <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                     {column.render("Header")}
+                    <span>
+                      {column.isSorted
+                        ? column.isSortedDesc
+                          ? " 🔽"
+                          : " 🔼"
+                        : ""}
+                    </span>
                   </th>
                 ))}
               </tr>
