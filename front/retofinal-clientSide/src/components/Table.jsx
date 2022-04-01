@@ -3,30 +3,30 @@ import {
   usePagination,
   useTable,
   useSortBy,
-  //useFilters, 
-   useGlobalFilter, 
-//   useAsyncDebounce
+  //useFilters,
+  useGlobalFilter,
+  //   useAsyncDebounce
 } from "react-table/dist/react-table.development";
 import TableContainer from "../containers/TableContainer";
 import GlobalFilter from "./GlobalFilter";
 
 export default function Table({
   data,
-  fetchData,
   columns,
+  fetchData,
   pageCount: controlledPageCount,
 }) {
   const tableInstance = useTable(
     {
       columns,
       data,
-      initialState: { pageIndex: 0 },
-      manualPagination: true,
-      pageCount: controlledPageCount,
+      initialState: { pageIndex: 0},
+ //     manualPagination: true,
+     // pageCount: controlledPageCount,
     },
     useGlobalFilter,
     useSortBy,
-    usePagination,
+    usePagination
   );
 
   const {
@@ -43,14 +43,33 @@ export default function Table({
     visibleColumns,
     preGlobalFilteredRows,
     setGlobalFilter,
-    state: { pageIndex },
+    page,
+    pageOptions,
+    pageCount,
+    gotoPage,
+    setPageSize,
   } = tableInstance;
+
   useEffect(() => {
     fetchData();
-  }, [pageIndex, fetchData]);
+  }, [ fetchData]);
 
   return (
     <div>
+      <pre>
+        <code>
+          {JSON.stringify(
+            {
+              state,
+              pageCount,
+              canNextPage,
+              canPreviousPage,
+            },
+            null,
+            2
+          )}
+        </code>
+      </pre>
       <TableContainer>
         <table {...getTableProps()}>
           <thead>
@@ -71,22 +90,22 @@ export default function Table({
               </tr>
             ))}
             <tr>
-            <th
-              colSpan={visibleColumns.length}
-              style={{
-                textAlign: 'left',
-              }}
-            >
-              <GlobalFilter
-                preGlobalFilteredRows={preGlobalFilteredRows}
-                globalFilter={state.globalFilter}
-                setGlobalFilter={setGlobalFilter}
-              />
-            </th>
-          </tr>
+              <th
+                colSpan={visibleColumns.length}
+                style={{
+                  textAlign: "left",
+                }}
+              >
+                <GlobalFilter
+                  preGlobalFilteredRows={preGlobalFilteredRows}
+                  globalFilter={state.globalFilter}
+                  setGlobalFilter={setGlobalFilter}
+                />
+              </th>
+            </tr>
           </thead>
           <tbody {...getTableBodyProps()}>
-            {rows.map((row) => {
+            {page.map((row, i) => {
               prepareRow(row);
               return (
                 <tr {...row.getRowProps()}>
@@ -102,12 +121,48 @@ export default function Table({
         </table>
       </TableContainer>
       <div className="pagination">
+        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+          {"<<"}
+        </button>{" "}
         <button onClick={() => previousPage()} disabled={!canPreviousPage}>
           {"<"}
-        </button>
-        <button onClick={() => nextPage()} disabled={!canNextPage}>
+        </button>{" "}
+        <button onClick={() => {nextPage(); console.log(state.pageIndex)}} disabled={!canNextPage}>
           {">"}
-        </button>
+        </button>{" "}
+        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+          {">>"}
+        </button>{" "}
+        <span>
+          Page{" "}
+          <strong>
+            {state.pageIndex + 1} of {pageOptions.length}
+          </strong>{" "}
+        </span>
+        <span>
+          | Go to page:{" "}
+          <input
+            type="number"
+            defaultValue={state.pageIndex + 1}
+            onChange={(e) => {
+              const page = e.target.value ? Number(e.target.value) - 1 : 0;
+              gotoPage(page);
+            }}
+            style={{ width: "100px" }}
+          />
+        </span>{" "}
+        <select
+          value={state.pageSize}
+          onChange={(e) => {
+            setPageSize(Number(e.target.value));
+          }}
+        >
+          {[10, 20, 30, 40, 50].map((pageSize) => (
+            <option key={pageSize} value={pageSize}>
+              Show {pageSize}
+            </option>
+          ))}
+        </select>
       </div>
     </div>
   );

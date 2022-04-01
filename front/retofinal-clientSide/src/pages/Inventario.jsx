@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import Table from "../components/Table";
-import fetchUsers from "../redux/api/api";
+import fetchInventory from "../redux/api/api";
 
 const Inventario = () => {
   const [isLoading, setLoading] = useState(false);
@@ -9,7 +9,7 @@ const Inventario = () => {
 
   const fetchData = useCallback(async function () {
       setLoading(true)
-      const json = await fetchUsers()
+      const json = await fetchInventory()
       setProducts(json)
       //setPageCount(json.total_pages)
       setLoading(false)
