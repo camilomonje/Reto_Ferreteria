@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   usePagination,
   useTable,
@@ -8,19 +9,25 @@ import {
   //   useAsyncDebounce
 } from "react-table/dist/react-table.development";
 import TableContainer from "../containers/TableContainer";
+import fetchInventory from "../redux/actions/action";
 import GlobalFilter from "./GlobalFilter";
 
 export default function Table({
-  data,
+  //data,
   columns,
-  fetchData,
-  pageCount: controlledPageCount,
+  //fetchData,
 }) {
+
+  const selector = useSelector(state => state)
+  const data = selector.inventory
+  console.log(selector)
+
   const tableInstance = useTable(
     {
       columns,
       data,
-      initialState: { pageIndex: 0},
+      // selector,
+      initialState: { pageSize: 5},
  //     manualPagination: true,
      // pageCount: controlledPageCount,
     },
@@ -35,7 +42,6 @@ export default function Table({
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    rows,
     prepareRow,
     nextPage,
     previousPage,
@@ -50,29 +56,27 @@ export default function Table({
     setPageSize,
   } = tableInstance;
 
-  useEffect(() => {
-    fetchData();
-  }, [ fetchData]);
+  
 
   return (
     <div>
-      <pre>
-        <code>
-          {JSON.stringify(
-            {
-              state,
-              pageCount,
-              canNextPage,
-              canPreviousPage,
-            },
-            null,
-            2
-          )}
-        </code>
-      </pre>
       <TableContainer>
         <table {...getTableProps()}>
           <thead>
+          <tr>
+              <th
+                colSpan={visibleColumns.length}
+                style={{
+                  textAlign: "left",
+                }}
+              >
+                <GlobalFilter
+                  preGlobalFilteredRows={preGlobalFilteredRows}
+                  globalFilter={state.globalFilter}
+                  setGlobalFilter={setGlobalFilter}
+                />
+              </th>
+            </tr>
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
@@ -89,20 +93,7 @@ export default function Table({
                 ))}
               </tr>
             ))}
-            <tr>
-              <th
-                colSpan={visibleColumns.length}
-                style={{
-                  textAlign: "left",
-                }}
-              >
-                <GlobalFilter
-                  preGlobalFilteredRows={preGlobalFilteredRows}
-                  globalFilter={state.globalFilter}
-                  setGlobalFilter={setGlobalFilter}
-                />
-              </th>
-            </tr>
+            
           </thead>
           <tbody {...getTableBodyProps()}>
             {page.map((row, i) => {
@@ -127,7 +118,7 @@ export default function Table({
         <button onClick={() => previousPage()} disabled={!canPreviousPage}>
           {"<"}
         </button>{" "}
-        <button onClick={() => {nextPage(); console.log(state.pageIndex)}} disabled={!canNextPage}>
+        <button onClick={() => nextPage()} disabled={!canNextPage}>
           {">"}
         </button>{" "}
         <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>

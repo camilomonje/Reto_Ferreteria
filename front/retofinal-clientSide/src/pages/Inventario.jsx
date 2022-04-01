@@ -1,19 +1,35 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Table from "../components/Table";
-import fetchInventory from "../redux/api/api";
+import fetchInventory from "../redux/actions/action";
+import api from "../redux/api/api"
+
 
 const Inventario = () => {
   const [isLoading, setLoading] = useState(false);
-  const [products, setProducts] = useState([]);
-  //const [pageCount, setPageCount] = useState(0);
+  //const [products, setProducts] = useState([]);
 
-  const fetchData = useCallback(async function () {
-      setLoading(true)
-      const json = await fetchInventory()
-      setProducts(json)
-      //setPageCount(json.total_pages)
-      setLoading(false)
-  },[]);
+
+  const dispatch = useDispatch()
+   
+
+  useEffect(() => {
+    dispatch(fetchInventory())
+  }, [dispatch]);
+
+  
+
+  //setProducts(selector.inventory)
+
+  //console.log(products)
+
+
+  // const fetchData = useCallback(async function () {
+  //     setLoading(true)
+  //     const json = await api.fetchInventory()
+  //     setProducts(json)
+  //     setLoading(false)
+  // },[]);
 
   const columns = React.useMemo(
     () => [
@@ -53,9 +69,8 @@ const Inventario = () => {
       </h1>
       <Table
         columns={columns}
-        data={products}
-        fetchData={fetchData}
-        //pageCount={pageCount}
+        //data={selector.inventory}
+        //fetchData={fetchData}
       />
       {isLoading && <div>Cargando...</div>}
     </div>
