@@ -6,12 +6,12 @@ public class Persona {
 
     private Long celular;
 
-    private String idCliente;
+    private String id;
 
-    public Persona(String idCliente, String nombre, Long celular) {
+    public Persona(String id, String nombre, Long celular) {
         this.nombre = nombre;
         this.celular = celular;
-        this.idCliente = idCliente;
+        this.id = id;
     }
 
     public String getNombre() {
@@ -31,11 +31,11 @@ public class Persona {
     }
 
     public String getIdCliente() {
-        return idCliente;
+        return id;
     }
 
     public void setIdCliente(String idCliente) {
-        this.idCliente = idCliente;
+        this.id = idCliente;
     }
 
     @Override
@@ -43,7 +43,7 @@ public class Persona {
         return "Persona{" +
                 "nombre='" + nombre + '\'' +
                 ", celular=" + celular +
-                ", idCliente='" + idCliente + '\'' +
+                ", idCliente='" + id + '\'' +
                 '}';
     }
 }

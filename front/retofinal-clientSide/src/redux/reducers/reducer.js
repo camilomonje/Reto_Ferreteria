@@ -33,6 +33,14 @@ const reducer = (state = initialState, action) => {
     case "GET_PROVEEDORES_FAILED":
       return { ...state, proveedores: action.payload, loading: false };
 
+    case "SET_PROVEEDORES":
+      return { ...state, loading: true };
+
+    case "SET_PROVEEDORES_SUCCESS":
+      return { ...state, loading: false };
+
+    case "SET_PROVEEDORES_FAILED":
+      return { ...state, proveedores: action.payload, loading: false };
     default:
       return state;
   }

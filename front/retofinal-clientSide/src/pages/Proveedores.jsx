@@ -22,6 +22,7 @@ const Proveedores = () => {
         }}
       >
         <h1>Productos:</h1>
+        {console.log(data)}
         {data.map(p => {
           if (p.id === row.values.id){
             return <h2>{p.productoList.map(l => {

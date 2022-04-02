@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import uuid from 'react-uuid';
+import api from '../redux/api/api'
 
 import '../assets/styles/containers/gvolante.scss'
 
 const GVolante = () => {
 
     const [productos, setProductos] = useState([]);
-    const [volante, setVolante] = useState({});
+    const [volante, setVolante] = useState({proveedor: {}, productoList: []});
     const [datosDisabled, setDatosDisabled] = useState(false)
 
-    // const guardarProductos = (nombreProducto, cantidad, precio) => {
-        
-    //     setProductos([...productos, {nombreProducto,cantidad, precio}])
-    // }
+    const dispatch = useDispatch();
 
     const guardarVolante =() => {
+        dispatch(api.saveVolantes(volante))
+        console.log(volante)
         
     }
 
@@ -23,11 +24,9 @@ const GVolante = () => {
 
         const nombre = e.target.elements.nombre.value;
         const celular = e.target.elements.celular.value;
-        const idProveedor = e.target.elements.idProveedor.value;
-       // console.log(nombre)  
-        setVolante({nombre,celular,idProveedor}) 
+        const id = e.target.elements.idProveedor.value;
+        setVolante({...volante, proveedor: {nombre,celular,id}}) 
         setDatosDisabled(!datosDisabled)
-        console.log(volante)     
         
     }
 
@@ -38,8 +37,9 @@ const GVolante = () => {
         const cantidad = e.target.elements.cantidad.value;
         const precio = e.target.elements.precio.value;
 
-        //guardarProductos(nombreProducto,cantidad, precio)
         setProductos([...productos, {nombreProducto,cantidad, precio}])
+        console.log(volante.productoList)
+        setVolante({...volante, productoList: [...volante.productoList,{nombreProducto,cantidad, precio} ]})
     }
 
 
@@ -77,11 +77,13 @@ const GVolante = () => {
                 </label> 
                 <label>
                     <h2>Productos Seleccionados</h2>
+                    <ul>
                     {productos.map(p => {
-                        return <ul>
-                            <li><h3 key={uuid()}>{p.nombreProducto}{"-----------"}{p.cantidad}{"---------"}{p.precio}</h3></li>
-                        </ul> 
+                        return (
+                        <li key={uuid()}><h3>{p.nombreProducto}{"-----------"}{p.cantidad}{"---------"}{p.precio}</h3></li>
+                        )
                     })}
+                     </ul> 
                 </label>
             </form>
             </div>

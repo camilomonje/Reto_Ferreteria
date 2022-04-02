@@ -8,6 +8,9 @@ import {
   getVolantes,
   getVolantesFailed,
   getVolantesSuccess,
+  setVolantes,
+  setVolantesFailed,
+  setVolantesSuccess,
 } from "../actions/action";
 
 const functions = {
@@ -52,6 +55,30 @@ const functions = {
         });
     };
   },
+
+  saveVolantes: (request) => {
+    return async (dispatch) => {
+      dispatch(setVolantes());
+      fetch(`http://localhost:8080/volante`, {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        body: JSON.stringify(request),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => {
+          return response.json();
+        })
+        .then((json) => {
+          dispatch(setVolantesSuccess(json));
+        })
+        .catch((error) => {
+          dispatch(setVolantesFailed("No encontrado"));
+        });
+    };
+  },
+
+
 
   fetchFacturas: () => {
     return async (dispatch) => {
