@@ -44,4 +44,9 @@ public class InventarioDTOReactivaService implements IInventarioDTOReactivaServi
                 });
     }
 
+    @Override
+    public Mono<InventarioDTOReactiva> findByNombreProducto(String nombreProducto) {
+        return repository.findByNombreProducto(nombreProducto);
+    }
+
 }

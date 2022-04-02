@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TableInventory from "../components/Table";
-import api from '../redux/api/api.js'
+import api from '../redux/api/apiInventory.js'
 
 
 const Inventario = () => {

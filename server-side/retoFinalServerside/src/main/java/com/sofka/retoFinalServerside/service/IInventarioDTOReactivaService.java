@@ -12,4 +12,5 @@ public interface IInventarioDTOReactivaService {
     Mono<InventarioDTOReactiva> findById(String id);
     Flux<InventarioDTOReactiva> findAll();
     Mono<InventarioDTOReactiva> update(String id, InventarioDTOReactiva inventarioDTOReactiva);
+    Mono<InventarioDTOReactiva> findByNombreProducto(String nombreProducto);
 }

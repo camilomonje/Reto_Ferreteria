@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Table from "../components/Table";
-import api from "../redux/api/api";
+import api from "../redux/api/apiFacturas.js";
 
 const Factura = () => {
   const dispatch = useDispatch();

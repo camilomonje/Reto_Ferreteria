@@ -27,6 +27,12 @@ public class InventarioDTOController {
         return service.findById(id);
     }
 
+    @GetMapping("/{nombreProducto}/findByName")
+    private Mono<InventarioDTOReactiva> findByNombreProducto(@PathVariable("nombreProducto") String nombreProducto) {
+        return service.findByNombreProducto(nombreProducto);
+    }
+
+
     @PostMapping("")
     private Mono<InventarioDTOReactiva> save(@RequestBody InventarioDTOReactiva inventario){
         return service.save(inventario);
@@ -45,5 +51,7 @@ public class InventarioDTOController {
                 .flatMap(inventario -> Mono.just(ResponseEntity.ok(inventario)))
                 .switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
     }
+
+
 
 }

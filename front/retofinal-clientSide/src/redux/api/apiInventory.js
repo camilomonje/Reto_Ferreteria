@@ -1,16 +1,13 @@
 import {
-  getFactura,
-  getFacturaFailed,
-  getFacturaSuccess,
   getInventory,
   getInventoryFailed,
   getInventorySuccess,
-  getVolantes,
-  getVolantesFailed,
-  getVolantesSuccess,
-  setVolantes,
-  setVolantesFailed,
-  setVolantesSuccess,
+  getProducto,
+  getProductoFailed,
+  getProductoSuccess,
+  setInventory,
+  setInventoryFailed,
+  setInventorySuccess,
 } from "../actions/action";
 
 const functions = {
@@ -35,10 +32,10 @@ const functions = {
     };
   },
 
-  fetchVolantes: () => {
+  getProducto: (nombreProducto) => {
     return async (dispatch) => {
-      dispatch(getVolantes());
-      fetch(`http://localhost:8080/volante`, {
+      dispatch(getProducto());
+      fetch(`http://localhost:8080/inventario/${nombreProducto}/findByName`, {
         method: "GET", // *GET, POST, PUT, DELETE, etc.
         headers: {
           "Content-Type": "application/json",
@@ -48,18 +45,18 @@ const functions = {
           return response.json();
         })
         .then((json) => {
-          dispatch(getVolantesSuccess(json));
+          dispatch(getProductoSuccess(json));
         })
         .catch((error) => {
-          dispatch(getVolantesFailed("No encontrado"));
+          dispatch(getProductoFailed("No encontrado"));
         });
     };
   },
 
-  saveVolantes: (request) => {
+  saveInventory: (request) => {
     return async (dispatch) => {
-      dispatch(setVolantes());
-      fetch(`http://localhost:8080/volante`, {
+      dispatch(setInventory());
+      fetch(`http://localhost:8080/inventario`, {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
         body: JSON.stringify(request),
         headers: {
@@ -70,36 +67,15 @@ const functions = {
           return response.json();
         })
         .then((json) => {
-          dispatch(setVolantesSuccess(json));
+          dispatch(setInventorySuccess(json));
         })
         .catch((error) => {
-          dispatch(setVolantesFailed("No encontrado"));
+          dispatch(setInventoryFailed("No encontrado"));
         });
     };
   },
 
-
-
-  fetchFacturas: () => {
-    return async (dispatch) => {
-      dispatch(getFactura());
-      fetch(`http://localhost:8080/factura`, {
-        method: "GET", // *GET, POST, PUT, DELETE, etc.
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => {
-          return response.json();
-        })
-        .then((json) => {
-          dispatch(getFacturaSuccess(json));
-        })
-        .catch((error) => {
-          dispatch(getFacturaFailed("No encontrado"));
-        });
-    };
-  },
+  
 };
 
 export default functions;
