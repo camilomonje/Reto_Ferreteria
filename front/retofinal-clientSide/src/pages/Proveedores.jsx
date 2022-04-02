@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Table from "../components/Table.jsx";
 import api from '../redux/api/api.js'
 
-const Proovedores = () => {
+const Proveedores = () => {
     const dispatch = useDispatch()
 
   useEffect(() => {
@@ -24,7 +24,6 @@ const Proovedores = () => {
         <h1>Productos:</h1>
         {data.map(p => {
           if (p.id === row.values.id){
-            console.log(p)
             return <h2>{p.productoList.map(l => {
               
               return <ul>
@@ -96,4 +95,4 @@ const Proovedores = () => {
   );
 };
 
-export default Proovedores;
+export default Proveedores;

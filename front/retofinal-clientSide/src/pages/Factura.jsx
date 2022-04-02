@@ -24,7 +24,6 @@ const Factura = () => {
         <h1>Productos:</h1>
         {data.map(p => {
           if (p.id === row.values.id){
-            console.log(p)
             return <h2>{p.listaProductos.map(l => {
               
               return <ul>
