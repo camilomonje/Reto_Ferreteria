@@ -11,7 +11,7 @@ const Factura = () => {
   }, [dispatch]);
 
   const selector = useSelector((state) => state);
-  const data = selector.inventory;
+  const data = selector.facturas;
 
   const renderRowSubComponent = useCallback(
     

@@ -11,7 +11,7 @@ const Proveedores = () => {
   }, [dispatch]);
 
   const selector = useSelector(state => state)
-  const data = selector.inventory
+  const data = selector.proveedores
 
   const renderRowSubComponent = useCallback(
     

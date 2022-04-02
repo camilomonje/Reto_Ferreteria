@@ -1,7 +1,13 @@
 import {
+  getFactura,
+  getFacturaFailed,
+  getFacturaSuccess,
   getInventory,
   getInventoryFailed,
   getInventorySuccess,
+  getVolantes,
+  getVolantesFailed,
+  getVolantesSuccess,
 } from "../actions/action";
 
 const functions = {
@@ -28,7 +34,7 @@ const functions = {
 
   fetchVolantes: () => {
     return async (dispatch) => {
-      dispatch(getInventory());
+      dispatch(getVolantes());
       fetch(`http://localhost:8080/volante`, {
         method: "GET", // *GET, POST, PUT, DELETE, etc.
         headers: {
@@ -39,17 +45,17 @@ const functions = {
           return response.json();
         })
         .then((json) => {
-          dispatch(getInventorySuccess(json));
+          dispatch(getVolantesSuccess(json));
         })
         .catch((error) => {
-          dispatch(getInventoryFailed("No encontrado"));
+          dispatch(getVolantesFailed("No encontrado"));
         });
     };
   },
 
   fetchFacturas: () => {
     return async (dispatch) => {
-      dispatch(getInventory());
+      dispatch(getFactura());
       fetch(`http://localhost:8080/factura`, {
         method: "GET", // *GET, POST, PUT, DELETE, etc.
         headers: {
@@ -60,10 +66,10 @@ const functions = {
           return response.json();
         })
         .then((json) => {
-          dispatch(getInventorySuccess(json));
+          dispatch(getFacturaSuccess(json));
         })
         .catch((error) => {
-          dispatch(getInventoryFailed("No encontrado"));
+          dispatch(getFacturaFailed("No encontrado"));
         });
     };
   },

@@ -12,3 +12,32 @@ export const getInventoryFailed = (error) => ({
     payload: error
 })
 
+export const getFactura = () => ({
+  type: "GET_FACTURA",
+});
+
+export const getFacturaSuccess = (response) => ({
+    type: "GET_FACTURA_SUCCESS",
+    payload: response
+})
+
+export const getFacturaFailed = (error) => ({
+    type: "GET_FACTURA_FAILED",
+    payload: error
+})
+
+
+export const getVolantes = () => ({
+  type: "GET_PROVEEDORES",
+});
+
+export const getVolantesSuccess = (response) => ({
+    type: "GET_PROVEEDORES_SUCCESS",
+    payload: response
+})
+
+export const getVolantesFailed = (error) => ({
+    type: "GET_PROVEEDORES_FAILED",
+    payload: error
+})
+
