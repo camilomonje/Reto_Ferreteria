@@ -46,9 +46,11 @@ const functions = {
         })
         .then((json) => {
           dispatch(getProductoSuccess(json));
+          
         })
         .catch((error) => {
           dispatch(getProductoFailed("No encontrado"));
+
         });
     };
   },

@@ -1,7 +1,7 @@
 const initialState = {
   loading: false,
   inventory: [],
-  product: {} ,
+  product: {},
   proveedores: [],
   facturas: [],
 };
@@ -16,6 +16,15 @@ const reducer = (state = initialState, action) => {
 
     case "GET_INVENTORY_FAILED":
       return { ...state, inventory: action.payload, loading: false };
+
+    case "SET_INVENTORY":
+      return { ...state, loading: true };
+
+    case "SET_INVENTORY_SUCCESS":
+      return { ...state, loading: false };
+
+    case "SET_INVENTORY_FAILED":
+      return { ...state, loading: false };
 
     case "GET_PRODUCTO":
       return { ...state, loading: true };

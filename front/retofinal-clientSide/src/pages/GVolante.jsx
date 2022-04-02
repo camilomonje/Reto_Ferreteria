@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import uuid from "react-uuid";
 import apiProveedores from "../redux/api/apiProveedores";
@@ -11,34 +11,42 @@ const GVolante = () => {
   const [volante, setVolante] = useState({ proveedor: {}, productoList: [] });
   const [datosDisabled, setDatosDisabled] = useState(false);
 
+  useEffect(() => {
+    dispatch(apiInventory.fetchInventory())
+  }, []);
+
   const dispatch = useDispatch();
 
   const selector = useSelector((state) => state);
-  const datos = selector.product;
+  const datos = selector.inventory;
 
   const crearNuevo = (producto) => {
     //post
-    // const inventario = {
-    //     //nombreProducto : productos.nombreProducto
-    // }
-    console.log("crear nuevo");
+    const inventario = {
+        nombreProducto : producto.nombreProducto,
+        precioUnitario : producto.precio,
+        cantidad : producto.cantidad,
+        minimaCantidad: 0,
+        maximaCantidad: 100
+    }
+    dispatch(apiInventory.saveInventory(inventario))
+
+    console.log("producto",producto);
   };
 
   const reemplazarCantidad = (datos) => {
-    console.log("reemplazar");
+    console.log("datos",datos);
   };
 
   const guardarVolante = () => {
-      productos.map((p) => {
-          dispatch(apiInventory.getProducto(p.nombreProducto));
-          console.log("respuesta",datos)
-          if (datos === "No encontrado") {
-              crearNuevo(p);
-            } else {
-                reemplazarCantidad(datos);
-            }
-            return p;
-        });
+    productos.map(p => {
+        var a = {} 
+        a = datos.filter(f => p.nombreProducto === f.nombreProducto)
+        console.log(a)
+        a.length === 0 ?crearNuevo(p):reemplazarCantidad(...a)
+        return a;
+    })
+
         dispatch(apiProveedores.saveVolantes(volante));
   };
 

@@ -13,16 +13,16 @@ export const getInventoryFailed = (error) => ({
 })
 
 export const setInventory = () => ({
-  type: "GET_INVENTORY",
+  type: "SET_INVENTORY",
 });
 
 export const setInventorySuccess = (response) => ({
-    type: "GET_INVENTORY_SUCCESS",
+    type: "SET_INVENTORY_SUCCESS",
     payload: response
 })
 
 export const setInventoryFailed = (error) => ({
-    type: "GET_INVENTORY_FAILED",
+    type: "SET_INVENTORY_FAILED",
     payload: error
 })
 
