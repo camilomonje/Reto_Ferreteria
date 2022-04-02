@@ -26,15 +26,6 @@ const reducer = (state = initialState, action) => {
     case "SET_INVENTORY_FAILED":
       return { ...state, loading: false };
 
-    case "GET_PRODUCTO":
-      return { ...state, loading: true };
-
-    case "GET_PRODUCTO_SUCCESS":
-      return { ...state, product: action.payload, loading: false };
-
-    case "GET_PRODUCTO_FAILED":
-      return { ...state, product: action.payload, loading: false };
-
     case "GET_FACTURA":
       return { ...state, loading: true };
 

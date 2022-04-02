@@ -10,12 +10,13 @@ const GVolante = () => {
   const [productos, setProductos] = useState([]);
   const [volante, setVolante] = useState({ proveedor: {}, productoList: [] });
   const [datosDisabled, setDatosDisabled] = useState(false);
+  
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(apiInventory.fetchInventory())
-  }, []);
+  }, [dispatch]);
 
-  const dispatch = useDispatch();
 
   const selector = useSelector((state) => state);
   const datos = selector.inventory;
@@ -34,7 +35,17 @@ const GVolante = () => {
     console.log("producto",producto);
   };
 
-  const reemplazarCantidad = (datos) => {
+  const reemplazarCantidad = (datos, producto) => {
+    const inventario = {
+        id: datos.id,
+        nombreProducto : datos.nombreProducto,
+        precioUnitario : producto.precio,
+        cantidad : datos.cantidad + parseInt(producto.cantidad),
+        minimaCantidad: datos.minimaCantidad,
+        maximaCantidad: datos.maximaCantidad
+    }
+    dispatch(apiInventory.saveInventory(inventario))
+
     console.log("datos",datos);
   };
 
@@ -43,7 +54,7 @@ const GVolante = () => {
         var a = {} 
         a = datos.filter(f => p.nombreProducto === f.nombreProducto)
         console.log(a)
-        a.length === 0 ?crearNuevo(p):reemplazarCantidad(...a)
+        a.length === 0 ?crearNuevo(p):reemplazarCantidad(...a,p)
         return a;
     })
 
