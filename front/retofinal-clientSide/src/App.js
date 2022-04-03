@@ -4,6 +4,7 @@ import Navbar from "./components/Navigation/Navbar";
 
 import Login from "./containers/Login";
 import Factura from "./pages/Factura";
+import GFactura from "./pages/GFactura";
 import GVolante from "./pages/GVolante";
 import Home from "./pages/Home";
 import Inventario from "./pages/Inventario";
@@ -20,6 +21,7 @@ function App() {
         <Route path="/proveedores" element={<Proveedores />} />
         <Route path="/factura" element={<Factura />} />
         <Route path="/volante" element={<GVolante />} />
+        <Route path="/gfactura" element={<GFactura />} />
       </Routes>
     </BrowserRouter>
   );

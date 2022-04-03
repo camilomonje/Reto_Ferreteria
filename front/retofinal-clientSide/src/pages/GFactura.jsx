@@ -10,7 +10,7 @@ import apiInventory from "../redux/api/apiInventory";
 
 import "../assets/styles/containers/gvolante.scss";
 
-const GVolante = () => {
+const GFactura = () => {
   const [productos, setProductos] = useState([]);
   const [volante, setVolante] = useState({ proveedor: {}, productoList: [] });
   const [datosDisabled, setDatosDisabled] = useState(false);
@@ -110,7 +110,7 @@ const GVolante = () => {
 
   return (
     <div>
-      <h1>Generar Volante</h1>
+      <h1>Generar Factura</h1>
       <form onSubmit={submitHandler}>
         <div>
           Nombre:
@@ -193,4 +193,4 @@ const GVolante = () => {
   );
 };
 
-export default GVolante;
+export default GFactura;
