@@ -34,6 +34,16 @@ const reducer = (state = initialState, action) => {
 
     case "GET_FACTURA_FAILED":
       return { ...state, facturas: action.payload, loading: false };
+
+    case "SET_FACTURA":
+      return { ...state, loading: true };
+
+    case "SET_FACTURA_SUCCESS":
+      return { ...state, loading: false };
+
+    case "SET_FACTURA_FAILED":
+      return { ...state, loading: false };
+
     case "GET_PROVEEDORES":
       return { ...state, loading: true };
 
@@ -50,7 +60,7 @@ const reducer = (state = initialState, action) => {
       return { ...state, loading: false };
 
     case "SET_PROVEEDORES_FAILED":
-      return { ...state, proveedores: action.payload, loading: false };
+      return { ...state,  loading: false };
     default:
       return state;
   }

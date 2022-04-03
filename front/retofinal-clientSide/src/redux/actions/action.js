@@ -54,6 +54,20 @@ export const getFacturaFailed = (error) => ({
     payload: error
 })
 
+export const setFactura = () => ({
+  type: "SET_FACTURA",
+});
+
+export const setFacturaSuccess = (response) => ({
+    type: "SET_FACTURA_SUCCESS",
+    payload: response
+})
+
+export const setFacturaFailed = (error) => ({
+    type: "SET_FACTURA_FAILED",
+    payload: error
+})
+
 export const getVolantes = () => ({
   type: "GET_PROVEEDORES",
 });

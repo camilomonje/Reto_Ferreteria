@@ -2,6 +2,9 @@ import {
   getFactura,
   getFacturaFailed,
   getFacturaSuccess,
+  setFactura,
+  setFacturaFailed,
+  setFacturaSuccess,
 } from "../actions/action";
 
 const functions = {
@@ -23,6 +26,27 @@ const functions = {
         })
         .catch((error) => {
           dispatch(getFacturaFailed("No encontrado"));
+        });
+    };
+  },
+  saveFactura: (request) => {
+    return async (dispatch) => {
+      dispatch(setFactura());
+      fetch(`http://localhost:8080/factura`, {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        body: JSON.stringify(request),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => {
+          return response.json();
+        })
+        .then((json) => {
+          dispatch(setFacturaSuccess(json));
+        })
+        .catch((error) => {
+          dispatch(setFacturaFailed("No encontrado"));
         });
     };
   },
