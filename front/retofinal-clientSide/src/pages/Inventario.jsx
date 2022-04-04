@@ -47,8 +47,9 @@ const Inventario = () => {
 
 
   return (
-    <div className="App">
-      <Navbar />
+    <>
+    <Navbar />
+    <div className="">
       <h1>        
         Inventario!
       </h1>
@@ -57,6 +58,7 @@ const Inventario = () => {
         data={data}
       />
     </div>
+    </>
   );
 };
 

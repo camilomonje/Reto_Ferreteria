@@ -9,7 +9,6 @@ import apiFacturas from "../redux/api/apiFacturas";
 import apiInventory from "../redux/api/apiInventory";
 
 import "../assets/styles/containers/gvolante.scss";
-import Navbar from "../components/Navigation/Navbar";
 
 const GFactura = () => {
   const [productos, setProductos] = useState([]);
@@ -24,7 +23,7 @@ const GFactura = () => {
       setProductos(datos.map((item) => item.nombreProducto))
     );
     console.log(productos);
-  }, []);
+  }, [dispatch]);
 
 
   const reemplazarCantidad = (datos, producto) => {
@@ -108,7 +107,6 @@ const GFactura = () => {
 
   return (
     <div>
-      <Navbar />
       <h1>Generar Factura</h1>
       <form onSubmit={submitHandler}>
         <div>

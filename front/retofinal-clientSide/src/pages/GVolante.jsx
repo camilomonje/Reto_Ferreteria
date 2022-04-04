@@ -9,7 +9,6 @@ import apiProveedores from "../redux/api/apiProveedores";
 import apiInventory from "../redux/api/apiInventory";
 
 import "../assets/styles/containers/gvolante.scss";
-import Navbar from "../components/Navigation/Navbar";
 
 const GVolante = () => {
   const [productos, setProductos] = useState([]);
@@ -111,7 +110,6 @@ const GVolante = () => {
 
   return (
     <div>
-      <Navbar />
       <h1>Generar Volante</h1>
       <form onSubmit={submitHandler}>
         <div>
