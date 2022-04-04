@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Navbar from "../components/Navigation/Navbar";
 import TableInventory from "../components/Table";
 import api from '../redux/api/apiInventory.js'
 
@@ -47,6 +48,7 @@ const Inventario = () => {
 
   return (
     <div className="App">
+      <Navbar />
       <h1>        
         Inventario!
       </h1>

@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Navbar from "../components/Navigation/Navbar.jsx";
 import Table from "../components/Table.jsx";
 import api from "../redux/api/apiProveedores.js";
 
@@ -91,6 +92,7 @@ const Proveedores = () => {
 
   return (
     <div>
+      <Navbar />
       <h1>Proovedores</h1>
       <Table
         columns={columns}

@@ -9,6 +9,7 @@ import apiFacturas from "../redux/api/apiFacturas";
 import apiInventory from "../redux/api/apiInventory";
 
 import "../assets/styles/containers/gvolante.scss";
+import Navbar from "../components/Navigation/Navbar";
 
 const GFactura = () => {
   const [productos, setProductos] = useState([]);
@@ -25,19 +26,6 @@ const GFactura = () => {
     console.log(productos);
   }, []);
 
-  const crearNuevo = (producto) => {
-    //post
-    const inventario = {
-      nombreProducto: producto.nombreProducto,
-      precioUnitario: producto.precio,
-      cantidad: producto.cantidad,
-      minimaCantidad: 0,
-      maximaCantidad: 100,
-    };
-    dispatch(apiInventory.saveInventory(inventario));
-
-    console.log("producto", producto);
-  };
 
   const reemplazarCantidad = (datos, producto) => {
     const inventario = {
@@ -120,6 +108,7 @@ const GFactura = () => {
 
   return (
     <div>
+      <Navbar />
       <h1>Generar Factura</h1>
       <form onSubmit={submitHandler}>
         <div>

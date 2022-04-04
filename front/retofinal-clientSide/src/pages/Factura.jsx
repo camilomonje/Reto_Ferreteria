@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Navbar from "../components/Navigation/Navbar";
 import Table from "../components/Table";
 import api from "../redux/api/apiFacturas.js";
 
@@ -96,6 +97,7 @@ const Factura = () => {
 
   return (
     <div>
+      <Navbar />
       <h1>Facturas..!</h1>
       <Table columns={columns} data={data} renderRowSubComponent={renderRowSubComponent} />
     </div>

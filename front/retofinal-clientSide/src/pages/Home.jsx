@@ -1,14 +1,21 @@
-import React from 'react';
-import Logo from '../assets/img/logo.png'
-import Login from '../containers/Login'
-
+import Navbar from "../components/Navigation/Navbar";
+import { useAuth } from "../context/authContext";
 
 const Home = () => {
+
+    const {user, logout, loading} = useAuth()
+
+    const handleLogout = async () => {
+        await logout()
+    }
+
+    if (loading) return <h1>loading</h1>
+
     return (
-        <div className="div-welcome">
-            <img src={Logo} alt="" />
-            <h1>Ferreteria Raul</h1>
-            <Login />
+        <div>
+            <Navbar />
+            <h1 className='text-3xl font-bold underline'>Welcome {user.email}</h1>
+            <button onClick={handleLogout}>logout</button>
          </div>
     );
 };
