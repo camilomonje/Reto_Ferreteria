@@ -10,29 +10,30 @@ import Inventario from "./pages/Inventario";
 import Proveedores from "./pages/Proveedores";
 import { AuthProvider } from "./context/authContext";
 import { ProtectedRoute } from "./components/ProtectedRoute";
-import Navbar from "./components/Navigation/Navbar";
 
 function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route
-            path="/"
-            element={
-              <ProtectedRoute>
-                <Home />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="/inventario" element={<Inventario />} />
-          <Route path="/proveedores" element={<Proveedores />} />
-          <Route path="/factura" element={<Factura />} />
-          <Route path="/volante" element={<GVolante />} />
-          <Route path="/gfactura" element={<GFactura />} />
-        </Routes>
+        <div className="bg-slate-300">
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route
+              path="/"
+              element={
+                <ProtectedRoute>
+                  <Home />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/inventario" element={<Inventario />} />
+            <Route path="/proveedores" element={<Proveedores />} />
+            <Route path="/factura" element={<Factura />} />
+            <Route path="/volante" element={<GVolante />} />
+            <Route path="/gfactura" element={<GFactura />} />
+          </Routes>
+        </div>
       </AuthProvider>
     </BrowserRouter>
   );

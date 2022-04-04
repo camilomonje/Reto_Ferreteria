@@ -12,7 +12,7 @@ export const Login = () => {
   });
   const [error, setError] = useState("");
 
-  const { loginWithGoogle } = useAuth();
+  const { loginWithGoogle, loginWithGitHub } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = ({ target: { name, value } }) => {
@@ -53,8 +53,17 @@ export const Login = () => {
     }
   };
 
+  const handleGitHubSignin = async () => {
+    try {
+      await loginWithGitHub();
+      navigate("/");
+    } catch (error) {
+      setError(error.code);
+    }
+  };
+
   return (
-    <div className="bg-slate-300 text-black h-screen flex text-white">
+    <div className="bg-slate-300 h-screen flex text-white">
       <div className=" w-full max-w-xs m-auto ">
         {error && <Alert message={error} />}
         <form
@@ -100,7 +109,7 @@ export const Login = () => {
           </button>
         </form>
 
-        <p className="my-4 text-sm flex justify-between px-3">
+        <p className="my-4 text-sm flex justify-between px-3 text-black">
           No tienes una cuenta <Link to="/register">Registrate</Link>
         </p>
 
@@ -110,6 +119,14 @@ export const Login = () => {
         shadow-md rounded border-2 boder-gray-300 py-2 px-4 w-full"
         >
           Google Login
+        </button>
+
+        <button
+          onClick={handleGitHubSignin}
+          className="mt-2 bg-slate-50 hover:bg-slate-200 text-black
+        shadow-md rounded border-2 boder-gray-300 py-2 px-4 w-full"
+        >
+          GitHub Login
         </button>
       </div>
     </div>

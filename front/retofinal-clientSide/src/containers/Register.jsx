@@ -35,7 +35,7 @@ export const Register = () => {
   };
 
   return (
-    <div className="bg-slate-300 text-black h-screen flex text-white">
+    <div className="bg-slate-300 h-screen flex text-white">
       <div className="w-full max-w-xs m-auto">
         {error && <Alert message={error} />}
         <form
@@ -82,7 +82,7 @@ export const Register = () => {
           </button>
         </form>
 
-        <p className="my-4 text-sm flex justify-between px-3">
+        <p className=" text-black my-4 text-sm flex justify-between px-3">
           Ya tienes una cuenta? <Link to="/login">Inicia Sesion</Link>
         </p>
       </div>

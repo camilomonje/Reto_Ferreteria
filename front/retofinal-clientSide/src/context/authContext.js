@@ -4,6 +4,7 @@ import {
   signOut,
   GoogleAuthProvider,
   signInWithPopup,
+  GithubAuthProvider,
 } from "firebase/auth";
 import { auth } from "../firebase/credentials";
 
@@ -34,8 +35,13 @@ export const AuthProvider = ({ children }) => {
     return signInWithPopup(auth, googleProvider);
   };
 
+  const loginWithGitHub = () => {
+    const githubProvider = new GithubAuthProvider()
+    return signInWithPopup(auth, githubProvider)
+  }
+
   return (
-    <authContext.Provider value={{ user, logout, loading, loginWithGoogle }}>
+    <authContext.Provider value={{ user, logout, loading, loginWithGoogle, loginWithGitHub }}>
       {children}
     </authContext.Provider>
   );
