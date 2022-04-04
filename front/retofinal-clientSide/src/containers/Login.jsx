@@ -1,9 +1,13 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { FcGoogle } from 'react-icons/fc'
+import { BsGithub } from 'react-icons/bs'
+
 import { auth } from "../firebase/credentials";
 import { useAuth } from "../context/authContext";
 import Alert from "../components/Alert";
+
 
 export const Login = () => {
   const [user, setUser] = useState({
@@ -118,15 +122,16 @@ export const Login = () => {
           className="bg-slate-50 hover:bg-slate-200 text-black
         shadow-md rounded border-2 boder-gray-300 py-2 px-4 w-full"
         >
-          Google Login
+          Google Login <FcGoogle />
         </button>
+       
 
         <button
           onClick={handleGitHubSignin}
           className="mt-2 bg-slate-50 hover:bg-slate-200 text-black
         shadow-md rounded border-2 boder-gray-300 py-2 px-4 w-full"
         >
-          GitHub Login
+          GitHub Login <BsGithub />
         </button>
       </div>
     </div>

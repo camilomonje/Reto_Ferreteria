@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Navbar from "../components/Navigation/Navbar.jsx";
 import Table from "../components/Table.jsx";
 import api from "../redux/api/apiProveedores.js";
 
@@ -90,13 +91,20 @@ const Proveedores = () => {
   );
 
   return (
-    <div>
-      <h1>Proovedores</h1>
+    <div className="h-screen">
+    <Navbar />
+    <div className="bg-slate-300 flex-column  text-black">
+    <h1 className="text-xl mb-4 flex">        
+        <strong>Historial Volantes</strong>
+      </h1>
+      <div className="flex justify-center">
       <Table
         columns={columns}
         data={data}
         renderRowSubComponent={renderRowSubComponent}
       />
+      </div>
+    </div>
     </div>
   );
 };

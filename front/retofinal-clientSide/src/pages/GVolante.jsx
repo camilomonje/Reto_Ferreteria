@@ -9,9 +9,9 @@ import apiProveedores from "../redux/api/apiProveedores";
 import apiInventory from "../redux/api/apiInventory";
 
 import "../assets/styles/containers/gvolante.scss";
+import Navbar from "../components/Navigation/Navbar";
 
 const GVolante = () => {
-  const [productos, setProductos] = useState([]);
   const [volante, setVolante] = useState({ proveedor: {}, productoList: [] });
   const [datosDisabled, setDatosDisabled] = useState(false);
 
@@ -19,11 +19,8 @@ const GVolante = () => {
   const datos = useSelector((state) => state.inventory);
 
   useEffect(() => {
-    dispatch(apiInventory.fetchInventory()).then(
-      setProductos(datos.map((item) => item.nombreProducto))
-    );
-    console.log(productos)
-  }, []);
+    dispatch(apiInventory.fetchInventory());
+  }, [dispatch]);
 
   const crearNuevo = (producto) => {
     //post
@@ -49,20 +46,21 @@ const GVolante = () => {
       maximaCantidad: datos.maximaCantidad,
     };
     dispatch(apiInventory.saveInventory(inventario));
-
-    console.log("datos", datos);
   };
 
   const guardarVolante = () => {
-    volante.productoList.map((p) => {
-      var a = {};
-      a = datos.filter((f) => p.nombreProducto === f.nombreProducto);
-      console.log(a);
-      a.length === 0 ? crearNuevo(p) : reemplazarCantidad(...a, p);
-      return a;
-    });
+    if (volante.productoList.length !== 0) {
+      volante.productoList.map((p) => {
+        var a = {};
+        a = datos.filter((f) => p.nombreProducto === f.nombreProducto);
+        a.length === 0 ? crearNuevo(p) : reemplazarCantidad(...a, p);
+        return a;
+      });
 
-    dispatch(apiProveedores.saveVolantes(volante));
+      dispatch(apiProveedores.saveVolantes(volante));
+    } else {
+      alert("Agregue minimo un producto");
+    }
   };
 
   const submitHandler = (e) => {
@@ -71,8 +69,13 @@ const GVolante = () => {
     const nombre = e.target.elements.nombre.value;
     const celular = e.target.elements.celular.value;
     const id = e.target.elements.idProveedor.value;
-    setVolante({ ...volante, proveedor: { nombre, celular, id } });
-    setDatosDisabled(!datosDisabled);
+
+    if (nombre === "" || celular === "" || id === "") {
+      alert("Complete todos los campos");
+    } else {
+      setVolante({ ...volante, proveedor: { nombre, celular, id } });
+      setDatosDisabled(!datosDisabled);
+    }
   };
 
   const submitHandlerProductos = (e) => {
@@ -82,24 +85,22 @@ const GVolante = () => {
     const cantidad = e.target.elements.cantidad.value;
     const precio = e.target.elements.precio.value;
 
-    setVolante({
-      ...volante,
-      productoList: [
-        ...volante.productoList,
-        { nombreProducto, cantidad, precio },
-      ],
-    });
+    if (nombreProducto === "" || cantidad === "" || precio === "") {
+      alert("Complete todos los campos");
+    } else if (cantidad === "0" || precio === "0") {
+      alert("La cantidad ni el precio pueden ser cero");
+    } else {
+      setVolante({
+        ...volante,
+        productoList: [
+          ...volante.productoList,
+          { nombreProducto, cantidad, precio },
+        ],
+      });
+    }
   };
 
   const deleteItem = (nameItem) => {
-    //let nameItem = "Tablas"
-    console.log(nameItem);
-    console.log(volante.productoList);
-    console.log(
-      volante.productoList.filter(
-        (product) => product.nombreProducto !== nameItem
-      )
-    );
     setVolante({
       ...volante,
       productoList: volante.productoList.filter(
@@ -109,86 +110,178 @@ const GVolante = () => {
   };
 
   return (
-    <div>
-      <h1>Generar Volante</h1>
-      <form onSubmit={submitHandler}>
-        <div>
-          Nombre:
-          <input type="text" id="nombre" disabled={datosDisabled} />
-        </div>
-        <div>
-          Identificación:
-          <input type="text" id="idProveedor" disabled={datosDisabled} />
-        </div>
-        <div>
-          Celular:
-          <input type="number" id="celular" disabled={datosDisabled} />
-        </div>
-        <div>
-          <input
-            type="submit"
-            value="Agregar Productos"
-            disabled={datosDisabled}
-          />
-          <input type="submit" value="Editar Datos" disabled={!datosDisabled} />
-        </div>
-      </form>
-      <div hidden={!datosDisabled}>
-        <form onSubmit={submitHandlerProductos}>
-          <h2>Productos:</h2>
-          <div className="label-productos">
-          <Stack spacing={2} sx={{ width: 300 }}>
-            <Autocomplete
-              sx={{ width: 300 }}
-              onChange={(value) => console.log(value)}
-              // onInputChange={(e,inputValue) => }
-              id="nombreProducto"
-              freeSolo
-              options={datos.map((option) => option.nombreProducto)}
-              renderInput={(params) => (
-                <TextField {...params} label="Producto" />
-              )}
-            />
-          </Stack>
+    <div className={datosDisabled ? "h-full" : "h-screen"}>
+      <Navbar />
+      <div className="flex-column ml-6">
+        <h1 className="text-xl mb-4">
+          <strong>Generar Volante</strong>
+        </h1>
+        <form
+          onSubmit={submitHandler}
+          className="w-full max-w-lg justify-center"
+        >
+          <div className="flex flex-wrap -mx-3 mb-6">
+            <div className="w-full px-3">
+              <label
+                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                htmlFor="grid-first-name"
+              >
+                Nombre
+              </label>
+              <input
+                type="text"
+                id="nombre"
+                disabled={datosDisabled}
+                defaultValue=
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+              />
+            </div>
+          </div>
+          <div className="flex flex-wrap -mx-3 mb-6">
+            <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+              <label
+                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                htmlFor="grid-first-name"
+              >
+                Identificación
+              </label>
+              <input
+                type="text"
+                id="idProveedor"
+                disabled={datosDisabled}
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+              />
+            </div>
+            <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+              <label
+                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                htmlFor="grid-first-name"
+              >
+                Celular
+              </label>
+              <input
+                type="number"
+                id="celular"
+                disabled={datosDisabled}
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+              />
+            </div>
+          </div>
 
-            <input
-              type="number"
-              id="cantidad"
-              placeholder="Cantidad"
-              className="input-cantidad"
-            />
-            <input
-              type="number"
-              id="precio"
-              placeholder="Precio unitario"
-              className="input-precio"
-            />
-            <input type="submit" value="Agregar" className="input-submit" />
+          <div className="flex flex-wrap -mx-3 mb-6">
+            <div className="w-full px-3">
+              <input
+                type="submit"
+                value="Agregar Productos"
+                disabled={datosDisabled}
+                className="bg-white hover:bg-gray-200
+              text-gray-700 text-sm font-bold py-2 px-4 rounded
+        focus:outline-none focus:shadow-outline mr-5 "
+              />
+              <input
+                type="submit"
+                value="Editar Datos"
+                disabled={!datosDisabled}
+                className="bg-white hover:bg-gray-200
+              text-gray-700 text-sm font-bold py-2 px-4 rounded
+        focus:outline-none focus:shadow-outline "
+              />
+            </div>
           </div>
         </form>
-        <div>
-          <h2>Productos Seleccionados</h2>
-          <ul>
-            {volante.productoList.map((p) => {
-              return (
-                <li key={uuid()}>
-                  <h3>
-                    {p.nombreProducto}
-                    {"-----------"}
-                    {p.cantidad}
-                    {"---------"}
-                    {p.precio}
-                  </h3>
-                  <button onClick={() => deleteItem(p.nombreProducto)}>
-                    Eliminar
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
+        <div hidden={!datosDisabled}>
+          <form
+            onSubmit={submitHandlerProductos}
+            className="w-full max-w-lg justify-center"
+          >
+            <h2 className="text-xl mb-4">Productos:</h2>
+            <div className="flex flex-wrap -mx-3 mb-6">
+              <div className="w-full px-3">
+                <Stack spacing={2} sx={{ width: 300 }}>
+                  <Autocomplete
+                    sx={{ width: 300 }}
+                    id="nombreProducto"
+                    freeSolo
+                    options={datos.map((option) => option.nombreProducto)}
+                    renderInput={(params) => (
+                      <TextField {...params} label="Producto" />
+                    )}
+                  />
+                </Stack>
+              </div>
+              <div className="w-full px-3">
+                <input
+                  type="number"
+                  id="cantidad"
+                  placeholder="Cantidad"
+                  className="mt-5 appearance-none block w-50 bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                />
+                <input
+                  type="number"
+                  id="precio"
+                  placeholder="Precio unitario"
+                  className="appearance-none block w-50 bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                />
+                <input
+                  type="submit"
+                  value="Agregar"
+                  className="bg-white hover:bg-gray-200
+              text-gray-700 text-sm font-bold py-2 px-4 rounded
+        focus:outline-none focus:shadow-outline "
+                />
+              </div>
+            </div>
+          </form>
+          <div>
+            <h2 className="text-xl mb-4">Productos Seleccionados</h2>
+            <table className="table-auto">
+              <thead>
+                <tr>
+                  <th className="px-4 py-2">Nombre</th>
+                  <th className="px-4 py-2">Cantidad</th>
+                  <th className="px-4 py-2">Precio Unitario</th>
+                </tr>
+              </thead>
+              <tbody>
+                {volante.productoList.map((p) => {
+                  return (
+                    <tr key={uuid()}>
+                      <td className="border border-black px-4 py-2">
+                        {p.nombreProducto}
+                      </td>
+                      <td className="border border-black px-4 py-2">
+                        {p.cantidad}
+                      </td>
+                      <td className="border border-black px-4 py-2">
+                        {p.precio}
+                      </td>
+                      <td>
+                        <button
+                          className="bg-white hover:bg-gray-200
+                         text-gray-700 text-sm font-bold py-2 px-4 rounded
+                   focus:outline-none focus:shadow-outline "
+                          onClick={() => deleteItem(p.nombreProducto)}
+                        >
+                          Eliminar
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
         </div>
+        <button
+          hidden={!datosDisabled}
+          className="bg-white hover:bg-gray-200
+      text-gray-700 text-sm font-bold py-2 px-4 rounded
+focus:outline-none focus:shadow-outline mt-10 mb-6"
+          onClick={() => guardarVolante()}
+        >
+          Guardar Volante
+        </button>
       </div>
-      {<button onClick={() => guardarVolante()}>Guardar Volante</button>}
     </div>
   );
 };

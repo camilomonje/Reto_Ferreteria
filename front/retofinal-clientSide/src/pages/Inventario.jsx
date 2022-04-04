@@ -47,18 +47,20 @@ const Inventario = () => {
 
 
   return (
-    <>
+    <div className="h-screen">
     <Navbar />
-    <div className="">
-      <h1>        
-        Inventario!
+    <div className="bg-slate-300 flex-column  text-black">
+      <h1 className="text-xl mb-4">        
+        <strong>Inventario!</strong>
       </h1>
+      <div className="flex justify-center">
       <TableInventory
         columns={columns}
         data={data}
       />
+      </div>
     </div>
-    </>
+    </div>
   );
 };
 

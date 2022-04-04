@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Navbar from "../components/Navigation/Navbar";
 import Table from "../components/Table";
 import api from "../redux/api/apiFacturas.js";
 
@@ -14,33 +15,37 @@ const Factura = () => {
   const data = selector.facturas;
 
   const renderRowSubComponent = useCallback(
-    
     ({ row, data }) => (
       <pre
         style={{
-          fontSize: '10px',
+          fontSize: "10px",
         }}
       >
         <h1>Productos:</h1>
-        {data.map(p => {
-          if (p.id === row.values.id){
-            return <h2>{p.listaProductos.map(l => {
-              
-              return <ul>
-                <li>{l.nombreProducto}</li>
-                <ul>
-                  <li>Cantidad: {l.cantidad} unidades</li>
-                  <li>Precio Unitario: ${l.precio}</li>
-                </ul>
-              </ul>;
-            })}</h2>
+        {data.map((p) => {
+          if (p.id === row.values.id) {
+            return (
+              <h2>
+                {p.listaProductos.map((l) => {
+                  return (
+                    <ul>
+                      <li>{l.nombreProducto}</li>
+                      <ul>
+                        <li>Cantidad: {l.cantidad} unidades</li>
+                        <li>Precio Unitario: ${l.precio}</li>
+                      </ul>
+                    </ul>
+                  );
+                })}
+              </h2>
+            );
           }
           return "";
-        } )}
+        })}
       </pre>
     ),
     []
-  )
+  );
 
   const columns = React.useMemo(
     () => [
@@ -89,15 +94,25 @@ const Factura = () => {
         Header: "Total",
         accessor: "totalPrecio",
       },
-      
     ],
     []
   );
 
   return (
-    <div>
-      <h1>Facturas..!</h1>
-      <Table columns={columns} data={data} renderRowSubComponent={renderRowSubComponent} />
+    <div className="h-screen">
+      <Navbar />
+    <div className="bg-slate-300 flex-column  text-black">
+    <h1 className="text-xl mb-4">        
+        <strong>Historial Facturas</strong>
+      </h1>
+      <div className="flex justify-center">
+        <Table
+          columns={columns}
+          data={data}
+          renderRowSubComponent={renderRowSubComponent}
+        />
+        </div>
+      </div>
     </div>
   );
 };
