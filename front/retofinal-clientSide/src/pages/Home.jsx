@@ -14,7 +14,7 @@ const Home = () => {
     return (
         <div>
             <Navbar />
-            <h1 className='text-3xl font-bold underline'>Welcome {user.email}</h1>
+            <h1 className='text-3xl font-bold underline'>Welcome {user.displayName || user.email}</h1>
             <button onClick={handleLogout}>logout</button>
          </div>
     );

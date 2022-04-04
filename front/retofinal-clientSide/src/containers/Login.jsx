@@ -1,7 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
 import { auth } from "../firebase/credentials";
+import { useAuth } from "../context/authContext";
+import Alert from "../components/Alert";
 
 export const Login = () => {
   const [user, setUser] = useState({
@@ -10,6 +16,7 @@ export const Login = () => {
   });
   const [error, setError] = useState("");
 
+  const { loginWithGoogle } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = ({ target: { name, value } }) => {
@@ -18,30 +25,41 @@ export const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("")
+    setError("");
 
     try {
-        const userCredentials = await signInWithEmailAndPassword(auth, user.email,user.password)
-        console.log(userCredentials)
-        navigate('/')
+      const userCredentials = await signInWithEmailAndPassword(
+        auth,
+        user.email,
+        user.password
+      );
+      console.log(userCredentials);
+      navigate("/");
     } catch (error) {
-      console.log(error.code)
-      setError(error.code)
-        // if (error.code === "auth/invalid-email"){
-        //     setError("Email Invalido")
-        // } else if (error.code === "auth/weak-password") {
-        //     setError("La contraseña debe tener 6 o más caracteres")
-        // } else if (error.code === "auth/email-already-in-use")  {
-        //     setError("El usuario ya esta registrado")
-        // }
+      console.log(error.code);
+      setError(error.code);
+      if (error.code === "auth/invalid-email") {
+        setError("Email Invalido");
+      } else if (error.code === "auth/wrong-password") {
+        setError("La contraseña es Incorrecta");
+      } else if (error.code === "auth/user-not-found") {
+        setError("El usuario no esta registrado");
+      }
     }
-   
+  };
 
+  const handleGoogleSignin = async () => {
+    try {
+      await loginWithGoogle();
+      navigate("/");
+    } catch (error) {
+      setError(error.code);
+    }
   };
 
   return (
     <div>
-        {error && <p>{error}</p>}
+      {error && <Alert message={error} /> }
       <form onSubmit={handleSubmit}>
         <label htmlFor="email">Email</label>
         <input
@@ -56,6 +74,7 @@ export const Login = () => {
 
         <button>Iniciar Sesion</button>
       </form>
+      <button onClick={handleGoogleSignin}>Google Login</button>
     </div>
   );
 };
